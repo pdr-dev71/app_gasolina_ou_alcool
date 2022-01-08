@@ -1,10 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -12,56 +8,80 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController _controllerAlcool = TextEditingController();
   TextEditingController _controllerGasolina = TextEditingController();
+  String _resultText = "";
+
+  void _calculate() {
+    double priceAlcool = double.tryParse(_controllerAlcool.text);
+    double priceGasolina = double.tryParse(_controllerGasolina.text);
+
+    if (priceAlcool == null || priceGasolina == null) {
+      setState(() {
+        _resultText =
+            "Número inválido, digite números maiores que 0 e utilizando (.) ";
+      });
+    } else {
+      /*
+      * Se o preço do álcool divido pelo preço da gasolina
+      * for >= a 0.7 é melhor abastecer com gasolina
+      * senão é melhor utilizar álcool
+      * */
+      if ((priceAlcool / priceGasolina) >= 0.7) {
+        setState(() {
+          _resultText = "Melhor abastecer com gasolina";
+        });
+      } else {
+        setState(() {
+          _resultText = "Melhor abastecer com alcool";
+        });
+      }
+
+      //_limparCampos();
+
+    }
+  }
+
+  void _clearfields() {
+    _controllerGasolina.text = "";
+    _controllerAlcool.text = "";
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          "Álcool ou Gasolina",
-        ),
+        title: Text("Álcool ou Gasolina"),
         backgroundColor: Colors.blue,
       ),
       body: Container(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: EdgeInsets.all(32),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+            children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(bottom: 32),
-                child: Image.asset("images/logo.png"), //Logo da aplicação
+                padding: EdgeInsets.only(bottom: 32),
+                child: Image.asset("images/logo.png"),
               ),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.only(bottom: 10),
                 child: Text(
-                  "Saiba qual a melhor opção para abastacer o seu veiculo",
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  "Saiba qual a melhor opção para abastecimento do seu carro",
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
               ),
-              const TextField(
+              TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Preço Alcool, ex: 1.59",
-                ),
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-                //controller: _controllerAlcool,
+                decoration:
+                    InputDecoration(labelText: "Preço Alcool, ex: 4.90"),
+                style: TextStyle(fontSize: 22),
+                controller: _controllerAlcool,
               ),
-              const TextField(
+              TextField(
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Preço Gasolina, ex: 5.60",
-                ),
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-                //controller: _controllerGasolina,
+                decoration:
+                    InputDecoration(labelText: "Preço Gasolina, ex: 5.90"),
+                style: TextStyle(fontSize: 22),
+                controller: _controllerGasolina,
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10),
@@ -69,19 +89,17 @@ class _HomeState extends State<Home> {
                   color: Colors.blue,
                   textColor: Colors.white,
                   padding: EdgeInsets.all(15),
-                  child: const Text(
+                  child: Text(
                     "Calcular",
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(fontSize: 20),
                   ),
-                  onPressed: () => {},
+                  onPressed: _calculate,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(top: 17),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
                 child: Text(
-                  "Resultado",
+                  _resultText,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
