@@ -72,14 +72,14 @@ class _HomeState extends State<Home> {
               TextField(
                 keyboardType: TextInputType.number,
                 decoration:
-                    InputDecoration(labelText: "Preço Alcool, ex: 4.90"),
+                    InputDecoration(labelText: "Preço Alcool, ex: 4.80"),
                 style: TextStyle(fontSize: 22),
                 controller: _controllerAlcool,
               ),
               TextField(
                 keyboardType: TextInputType.number,
                 decoration:
-                    InputDecoration(labelText: "Preço Gasolina, ex: 5.90"),
+                    InputDecoration(labelText: "Preço Gasolina, ex: 6.30"),
                 style: TextStyle(fontSize: 22),
                 controller: _controllerGasolina,
               ),

@@ -2,7 +2,7 @@
     package="com.example.gasolina_ou_alcool">
    <application
         android:label="gasolina_ou_alcool"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
