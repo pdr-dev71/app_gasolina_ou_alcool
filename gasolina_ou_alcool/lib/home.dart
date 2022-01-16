@@ -11,32 +11,24 @@ class _HomeState extends State<Home> {
   String _resultText = "";
 
   void _calculate() {
-    double priceAlcool = double.tryParse(_controllerAlcool.text);
-    double priceGasolina = double.tryParse(_controllerGasolina.text);
+    double priceAlcool =
+        double.parse(_controllerAlcool.text.replaceAll(',', '.'));
+    double priceGasolina =
+        double.parse(_controllerGasolina.text.replaceAll(',', '.'));
 
-    if (priceAlcool == null || priceGasolina == null) {
-      setState(() {
-        _resultText =
-            "Número inválido, digite números maiores que 0 e utilizando (.) ";
-      });
-    } else {
-      /*
+    /*
       * Se o preço do álcool divido pelo preço da gasolina
       * for >= a 0.7 é melhor abastecer com gasolina
       * senão é melhor utilizar álcool
       * */
-      if ((priceAlcool / priceGasolina) >= 0.7) {
-        setState(() {
-          _resultText = "Melhor abastecer com gasolina";
-        });
-      } else {
-        setState(() {
-          _resultText = "Melhor abastecer com alcool";
-        });
-      }
-
-      //_limparCampos();
-
+    if ((priceAlcool / priceGasolina) >= 0.7) {
+      setState(() {
+        _resultText = "Melhor abastecer com gasolina";
+      });
+    } else {
+      setState(() {
+        _resultText = "Melhor abastecer com alcool";
+      });
     }
   }
 
@@ -71,15 +63,19 @@ class _HomeState extends State<Home> {
               ),
               TextField(
                 keyboardType: TextInputType.number,
-                decoration:
-                    InputDecoration(labelText: "Preço Alcool, ex: 4.80"),
+                decoration: InputDecoration(
+                  labelText: "Preço Alcool",
+                  hintText: "Ex: 4.80",
+                ),
                 style: TextStyle(fontSize: 22),
                 controller: _controllerAlcool,
               ),
               TextField(
                 keyboardType: TextInputType.number,
-                decoration:
-                    InputDecoration(labelText: "Preço Gasolina, ex: 6.30"),
+                decoration: InputDecoration(
+                  labelText: "Preço Gasolina",
+                  hintText: "Ex: 6.30",
+                ),
                 style: TextStyle(fontSize: 22),
                 controller: _controllerGasolina,
               ),
